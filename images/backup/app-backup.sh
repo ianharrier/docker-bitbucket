@@ -84,7 +84,7 @@ else
     "http://web:7990/mvc/admin/backups/progress/client?token=${UNLOCK_TOKEN}&percentage=50"
 
   echo "[I] Backing up Bitbucket database."
-  docker exec -i "$(docker-compose ps -q db 2>/dev/null)" su postgres -c 'pg_dump $POSTGRES_DB' > backups/tmp_backup/db.sql
+  docker exec -i "$(docker-compose ps -q db)" su postgres -c 'pg_dump $POSTGRES_DB' > backups/tmp_backup/db.sql
 
   echo "[I] Updating Bitbucket backup progress."
   curl --silent \
