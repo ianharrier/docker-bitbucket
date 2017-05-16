@@ -179,5 +179,5 @@ This is more than just a Bitbucket image. Included in this repo is everything yo
 3. Delete the repo. **Warning: this step is optional. If you delete the repo, all of your Bitbucket data, including backups, will be lost.**
 
     ```shell
-    sudo rm -rf /srv/docker/jira
+    sudo rm -rf /srv/docker/bitbucket
     ```
