@@ -10,7 +10,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 
 RUN set -ex \
         && apk --no-cache add \
-               openjdk8
+               openjdk8-jre
 
 #-------------------------------------------------------------------------------
 #  gosu (https://github.com/tianon/gosu)
