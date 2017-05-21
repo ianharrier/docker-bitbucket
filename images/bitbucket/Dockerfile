@@ -13,23 +13,6 @@ RUN set -ex \
                openjdk8-jre
 
 #-------------------------------------------------------------------------------
-#  gosu (https://github.com/tianon/gosu)
-#-------------------------------------------------------------------------------
-
-ARG GOSU_VERSION
-
-RUN set -ex \
-        && apk --no-cache add \
-               curl \
-        && curl --location --retry 3 \
-               --output /usr/local/bin/gosu \
-               https://github.com/tianon/gosu/releases/download/"${GOSU_VERSION}"/gosu-amd64 \
-        && chmod +x /usr/local/bin/gosu \
-        && gosu nobody true \
-        && apk --no-cache del \
-               curl
-
-#-------------------------------------------------------------------------------
 #  dumb-init (https://github.com/Yelp/dumb-init)
 #-------------------------------------------------------------------------------
 
@@ -92,6 +75,7 @@ COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN set -ex \
         && chmod +x /usr/local/bin/docker-entrypoint \
         && apk --no-cache add \
+               su-exec \
                tzdata
 
 CMD ["docker-entrypoint"]

@@ -7,7 +7,6 @@ services:
       args:
         - BITBUCKET_VERSION=${BITBUCKET_VERSION}
         - DUMBINIT_VERSION=1.2.0
-        - GOSU_VERSION=1.10
     image: ianharrier/bitbucket:${BITBUCKET_VERSION}
     restart: unless-stopped
     depends_on:

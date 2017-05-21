@@ -32,4 +32,4 @@ if [ "$TIMEZONE_COMPLETE" = "false" ]; then
 fi
 
 echo "[I] Entrypoint tasks complete. Starting Bitbucket."
-exec gosu ${RUN_USER} "${BITBUCKET_INSTALL}/bin/start-bitbucket.sh" -fg
+exec su-exec ${RUN_USER} "${BITBUCKET_INSTALL}/bin/start-bitbucket.sh" -fg
