@@ -13,22 +13,6 @@ RUN set -ex \
                openjdk8-jre
 
 #-------------------------------------------------------------------------------
-#  dumb-init (https://github.com/Yelp/dumb-init)
-#-------------------------------------------------------------------------------
-
-ARG DUMBINIT_VERSION
-
-RUN set -ex \
-        && apk --no-cache add \
-               curl \
-        && curl --location --retry 3 \
-               --output /usr/local/bin/dumb-init \
-               https://github.com/Yelp/dumb-init/releases/download/v"${DUMBINIT_VERSION}"/dumb-init_"${DUMBINIT_VERSION}"_amd64 \
-        && chmod +x /usr/local/bin/dumb-init \
-        && apk --no-cache del \
-               curl
-
-#-------------------------------------------------------------------------------
 #  Bitbucket (https://www.atlassian.com/software/bitbucket/download)
 #-------------------------------------------------------------------------------
 
@@ -76,8 +60,9 @@ RUN set -ex \
         && chmod +x /usr/local/bin/docker-entrypoint \
         && apk --no-cache add \
                su-exec \
+               tini \
                tzdata
 
 CMD ["docker-entrypoint"]
 
-ENTRYPOINT ["dumb-init"]
+ENTRYPOINT ["tini","--"]
