@@ -3,11 +3,7 @@ set -e
 
 START_TIME=$(date +%s)
 
-echo "=== Starting database container. ==============================================="
-docker-compose up -d db
-
-echo "=== Starting web container. ===================================================="
-docker-compose up -d web
+# The backup process will fail if the db and web containers are not started.
 
 echo "=== Starting backup container. ================================================="
 docker-compose up -d backup
