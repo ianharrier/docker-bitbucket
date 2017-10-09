@@ -71,7 +71,7 @@ This is more than just a Bitbucket image. Included in this repo is everything yo
 1. Set the working directory to the root of the repo.
 
     ```shell
-    cd /srv/docker/jira
+    cd /srv/docker/bitbucket
     ```
 
 2. Run the upgrade script.
