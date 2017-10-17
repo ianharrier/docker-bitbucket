@@ -23,6 +23,11 @@ NEW_BITBUCKET_VERSION=$(grep ^BITBUCKET_VERSION= .env.template | cut -d = -f 2)
 echo "[I] Upgrading Bitbucket from '$OLD_BITBUCKET_VERSION' to '$NEW_BITBUCKET_VERSION'."
 sed -i.bak "s/^BITBUCKET_VERSION=.*/BITBUCKET_VERSION=$NEW_BITBUCKET_VERSION/g" .env
 
+echo "=== Deleting old images. ======================================================="
+IMAGE_BACKUP=$(docker images ianharrier/bitbucket-backup -q)
+IMAGE_WEB=$(docker images ianharrier/bitbucket -q)
+docker rmi $IMAGE_BACKUP $IMAGE_WEB
+
 echo "=== Building new images. ======================================================="
 docker-compose build --pull
 
