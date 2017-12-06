@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.6
 
 MAINTAINER Ian Harrier <github@harrier.us>
 
