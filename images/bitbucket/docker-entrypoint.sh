@@ -1,9 +1,11 @@
 #!/bin/sh
 set -e
 
-echo "[I] Setting permissions on Bitbucket home directory."
-chown -R ${RUN_USER}:${RUN_GROUP}  "${BITBUCKET_HOME}"
-chmod -R u=rwx,go-rwx              "${BITBUCKET_HOME}"
+if [ "$TIMEZONE" ]; then
+    echo "[I] Setting the time zone."
+    cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
+    echo "$TIMEZONE" > /etc/timezone
+fi
 
 PROPERTIES_FILE="${BITBUCKET_HOME}/shared/bitbucket.properties"
 if [ ! -d "${BITBUCKET_HOME}/shared" ]; then
@@ -31,11 +33,9 @@ if [ "$PROXY_HOSTNAME" -a "$PROXY_PORT" -a "$PROXY_SCHEME" ]; then
     fi
 fi
 
-if [ "$TIMEZONE" ]; then
-    echo "[I] Setting the time zone."
-    cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
-    echo "$TIMEZONE" > /etc/timezone
-fi
+echo "[I] Setting permissions on Bitbucket home directory."
+chown -R ${RUN_USER}:${RUN_GROUP}  "${BITBUCKET_HOME}"
+chmod -R u=rwx,go-rwx              "${BITBUCKET_HOME}"
 
 echo "[I] Entrypoint tasks complete. Starting Bitbucket."
 exec su-exec ${RUN_USER} "${BITBUCKET_INSTALL}/bin/start-bitbucket.sh" -fg
