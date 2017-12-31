@@ -19,7 +19,7 @@ services:
             - PROXY_SCHEME=${WEB_PROXY_SCHEME}
             - TIMEZONE=${TIMEZONE}
         volumes:
-            - ./volumes/web/data:/var/atlassian/application-data/bitbucket
+            - ./volumes/web/data:/var/atlassian/application-data/bitbucket:Z
     db:
         image: postgres:9.6-alpine
         restart: unless-stopped
@@ -28,7 +28,7 @@ services:
             - POSTGRES_USER=${DB_POSTGRES_USER}
             - POSTGRES_PASSWORD=${DB_POSTGRES_PASSWORD}
         volumes:
-            - ./volumes/db/data:/var/lib/postgresql/data
+            - ./volumes/db/data:/var/lib/postgresql/data:Z
     backup:
         build:
             context: ./images/backup
@@ -50,3 +50,5 @@ services:
         volumes:
             - ./:${PWD}
             - /var/run/docker.sock:/var/run/docker.sock
+        security_opt:
+            - label:disable
