@@ -28,6 +28,7 @@ RUN set -ex \
                bash \
                curl \
                git \
+               git-daemon \
                perl \
                procps \
                tar \
