@@ -21,7 +21,7 @@ echo "=== Updating environment file. ===========================================
 OLD_BITBUCKET_VERSION=$(grep ^BITBUCKET_VERSION= .env | cut -d = -f 2)
 NEW_BITBUCKET_VERSION=$(grep ^BITBUCKET_VERSION= .env.template | cut -d = -f 2)
 echo "[I] Upgrading Bitbucket from '$OLD_BITBUCKET_VERSION' to '$NEW_BITBUCKET_VERSION'."
-sed -i.bak "s/^BITBUCKET_VERSION=.*/BITBUCKET_VERSION=$NEW_BITBUCKET_VERSION/g" .env
+sed -i.bak -e "s/^BITBUCKET_VERSION=.*/BITBUCKET_VERSION=$NEW_BITBUCKET_VERSION/g" .env
 
 echo "=== Deleting old images. ======================================================="
 IMAGE_BACKUP=$(docker images ianharrier/bitbucket-backup -q)
