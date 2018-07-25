@@ -6,7 +6,7 @@ START_TIME=$(date +%s)
 
 cd "$HOST_PATH"
 
-if [ "$OPERATION" = "disable" ]; then
+if [ "$BACKUP_OPERATION" = "disable" ]; then
     echo "[W] Backups are disabled."
 else
     if [ ! -d backups ]; then
@@ -84,7 +84,7 @@ else
         "http://web:7990/mvc/admin/backups/progress/client?token=${UNLOCK_TOKEN}&percentage=50"
 
     echo "[I] Backing up Bitbucket database."
-    docker exec -i "$(docker-compose ps -q db)" su postgres -c 'pg_dump $POSTGRES_DB' > backups/tmp_backup/db.sql
+    PGPASSWORD=${POSTGRES_PASSWORD} pg_dump --host=db --username=${POSTGRES_USER} --dbname=${POSTGRES_DB} > backups/tmp_backup/db.sql
 
     echo "[I] Updating Bitbucket backup progress."
     curl --silent \
@@ -109,7 +109,7 @@ else
     echo "[I] Removing working directory."
     rm -rf backups/tmp_backup
 
-    EXPIRED_BACKUPS=$(ls -1tr backups/*.tar.gz 2>/dev/null | head -n -$RETENTION)
+    EXPIRED_BACKUPS=$(ls -1tr backups/*.tar.gz 2>/dev/null | head -n -$BACKUP_RETENTION)
     if [ "$EXPIRED_BACKUPS" ]; then
         echo "[I] Cleaning up expired backup(s):"
         for BACKUP in $EXPIRED_BACKUPS; do
