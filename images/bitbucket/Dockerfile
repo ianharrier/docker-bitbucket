@@ -53,15 +53,13 @@ WORKDIR ${BITBUCKET_INSTALL}
 #  Scripts
 #-------------------------------------------------------------------------------
 
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+
 RUN set -ex \
         && apk --no-cache add \
                su-exec \
                tini \
-               tzdata
-
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-
-RUN set -ex \
+               tzdata \
         && chmod +x /usr/local/bin/docker-entrypoint
 
 CMD ["docker-entrypoint"]
